@@ -1,0 +1,6 @@
+framework module Pods_SpriteKit_Game_Implementation {
+  umbrella header "Pods-SpriteKit Game Implementation-umbrella.h"
+
+  export *
+  module * { export * }
+}
