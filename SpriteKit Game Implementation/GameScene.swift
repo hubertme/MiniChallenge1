@@ -12,6 +12,10 @@ import CoreMotion
 
 var kite = SKSpriteNode()
 
+var second = 0
+var scoreLabel = SKLabelNode()
+var isOver=false
+
 struct PhysicsCategory {
     static let none: UInt32 = 0
     static let all: UInt32 = UInt32.max
@@ -20,16 +24,14 @@ struct PhysicsCategory {
 }
 
 class GameScene: SKScene {
-    
     let motionManager = CMMotionManager()
-    
     override func didMove(to view: SKView) {
-        run(SKAction.repeatForever(
-            SKAction.sequence([
-                SKAction.run(generateObstacle),
-                SKAction.wait(forDuration: 1.0)
-                ])
-        ))
+        physicsWorld.contactDelegate = self
+        
+        second = 0
+        
+        let action = SKAction.repeatForever(SKAction.sequence([SKAction.run(generateObstacle), SKAction.run(updateScore), SKAction.wait(forDuration: 1.0)]))
+        run(action, withKey: "action")
         
         kite = self.childNode(withName: "kite") as! SKSpriteNode
         
@@ -38,7 +40,7 @@ class GameScene: SKScene {
         kite.physicsBody?.contactTestBitMask = PhysicsCategory.obstacles
         kite.physicsBody?.restitution = 0.5
         
-//        self.addChild(kite)
+        scoreLabel = self.childNode(withName: "scoreLabel") as! SKLabelNode
     }
     
     func generateObstacle(){
@@ -63,9 +65,29 @@ class GameScene: SKScene {
         
     }
     
-    
-//    override func viewDidAppear(_ animated: Bool){
-//        motionManager
-//    }
-    
+    func updateScore(){
+        second+=1
+        print("\(second) s")
+        scoreLabel.text = "\(second) s"
+    }
+}
+
+extension GameScene: SKPhysicsContactDelegate{
+    func didBegin(_ contact: SKPhysicsContact) {
+        if (contact.bodyA.categoryBitMask == PhysicsCategory.kite && contact.bodyB.categoryBitMask == PhysicsCategory.obstacles) {
+            print("Hit!")
+            isOver=true
+            removeAction(forKey: "action")
+            let gameOverLabel = SKLabelNode(fontNamed: "Helvetica")
+            gameOverLabel.position = CGPoint(x: 0, y: 0)
+            gameOverLabel.text = "Game Over :("
+            gameOverLabel.fontColor = UIColor.white
+            gameOverLabel.fontSize = 40
+            gameOverLabel.alpha = 0
+            UIView.animate(withDuration: 2) {
+                gameOverLabel.alpha = 1
+            }
+            addChild(gameOverLabel)
+        }
+    }
 }
