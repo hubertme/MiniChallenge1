@@ -32,8 +32,10 @@ class GameScene: SKScene {
     func generateObstacle(){
         let posX = Int(arc4random_uniform(320))-180
         
-        let obstacles = SKShapeNode(rect: CGRect(x: posX, y: 220, width: 60, height: 150))
+        let obstacles = SKShapeNode(rect: CGRect(x: posX, y: 220, width: 10, height: 100))
         obstacles.physicsBody? = SKPhysicsBody(rectangleOf: CGSize(width: 60, height: 100))
+        //Replace with "Hujan.png"
+        
         obstacles.physicsBody?.isDynamic = true
         obstacles.physicsBody?.affectedByGravity = true
         obstacles.physicsBody?.usesPreciseCollisionDetection = true
