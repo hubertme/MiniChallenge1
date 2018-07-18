@@ -8,10 +8,13 @@
 
 import SpriteKit
 import GameplayKit
+import CoreMotion
+
+var kite = SKSpriteNode()
 
 class GameScene: SKScene {
     
-    var kite = SKSpriteNode()
+    let motionManager = CMMotionManager()
     
     override func didMove(to view: SKView) {
         kite = self.childNode(withName: "kite") as! SKSpriteNode
@@ -23,6 +26,7 @@ class GameScene: SKScene {
                 SKAction.wait(forDuration: 1.0)
                 ])
         ))
+        
     }
     
     override func update(_ currentTime: TimeInterval) {
@@ -31,7 +35,6 @@ class GameScene: SKScene {
     
     func generateObstacle(){
         let posX = Int(arc4random_uniform(320))-180
-        
         let obstacles = SKShapeNode(rect: CGRect(x: posX, y: 220, width: 10, height: 100))
         obstacles.physicsBody? = SKPhysicsBody(rectangleOf: CGSize(width: 60, height: 100))
         //Replace with "Hujan.png"
@@ -48,4 +51,10 @@ class GameScene: SKScene {
         let actionMoveDone = SKAction.removeFromParent()
         obstacles.run(SKAction.sequence([actionMove,actionMoveDone]))
     }
+    
+    
+//    override func viewDidAppear(_ animated: Bool){
+//        motionManager
+//    }
+    
 }

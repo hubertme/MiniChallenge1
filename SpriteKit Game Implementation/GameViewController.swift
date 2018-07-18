@@ -9,12 +9,14 @@
 import UIKit
 import SpriteKit
 import GameplayKit
+import CoreMotion
 
-class GameViewController: UIViewController {
-
+class GameViewController: UIViewController  {
+    
+    let motionManager = CMMotionManager()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         if let view = self.view as! SKView? {
             // Load the SKScene from 'GameScene.sks'
             if let scene = SKScene(fileNamed: "GameScene") {
@@ -27,10 +29,13 @@ class GameViewController: UIViewController {
             
             view.ignoresSiblingOrder = true
             
-            view.showsFPS = true
+//            view.showsFPS = true
+            
         }
+        
     }
-
+    
+    
     override var shouldAutorotate: Bool {
         return false
     }
@@ -49,6 +54,31 @@ class GameViewController: UIViewController {
     }
 
     override var prefersStatusBarHidden: Bool {
-        return true
+        return false
     }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle{
+        return .lightContent
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        motionManager.accelerometerUpdateInterval = 0.01
+        
+        motionManager.startAccelerometerUpdates(to: OperationQueue.current!) { (data, error) in
+            if let myData = data {
+                let mult = 10.0
+                if (kite.position.x + (25*1.41) + CGFloat(myData.acceleration.x * mult) <= (375/2)) && (kite.position.x - (25*1.41) + CGFloat(myData.acceleration.x * mult) >= (-375/2)){
+                    kite.position.x += CGFloat((myData.acceleration.x) * mult)
+//                    print("ok")
+                }
+                else if (kite.position.x < 0){
+                    kite.position.x = (-375/2)+(25*1.41)
+                }
+                else{
+                    kite.position.x = (375/2)-(25*1.41)
+                }
+            }
+        }
+    }
+    
 }
