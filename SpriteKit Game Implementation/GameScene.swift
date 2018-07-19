@@ -45,9 +45,11 @@ class GameScene: SKScene {
     
     func generateObstacle(){
         let posX = Int(arc4random_uniform(320))-180
-        let obstacles = SKSpriteNode(color: #colorLiteral(red: 1, green: 0.5763723254, blue: 0, alpha: 1), size: CGSize(width: 10, height: 100))
+        let size = CGSize(width: 100, height: 100)
+        let obstacles = SKSpriteNode(imageNamed: "water")
+        obstacles.scale(to: size)
         obstacles.position = CGPoint(x: posX, y: 420)
-        obstacles.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: 10, height: 100))
+        obstacles.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: 100, height: 100))
         
         obstacles.physicsBody?.isDynamic = true
         obstacles.physicsBody?.collisionBitMask = PhysicsCategory.none
