@@ -10,6 +10,12 @@ import SpriteKit
 import GameplayKit
 import CoreMotion
 
+extension Array {
+    func randomElement() -> Element  {
+    
+        return self[Int(arc4random_uniform(UInt32(self.count)))]
+    }
+}
 var kite = SKSpriteNode()
 
 var second = 0
@@ -25,6 +31,9 @@ struct PhysicsCategory {
 
 class GameScene: SKScene {
     
+   
+    let arrayClouds = ["clouds1","clouds3","clouds4","clouds5","clouds9","clouds7"]
+    
     let motionManager = CMMotionManager()
     override func didMove(to view: SKView) {
         physicsWorld.contactDelegate = self
@@ -32,7 +41,15 @@ class GameScene: SKScene {
         second = 0
         
         let action = SKAction.repeatForever(SKAction.sequence([SKAction.wait(forDuration: 0.8), SKAction.run(generateObstacle), SKAction.run(updateScore)]))
-        run(action, withKey: "action")
+        
+        let actionCloudRepeat = SKAction.repeatForever(SKAction.sequence([SKAction.wait(forDuration: 7), SKAction.run(generateClouds)]))
+        let actionCloud = SKAction.sequence([SKAction.wait(forDuration: 2),SKAction.run(generateClouds)])
+//        run(actionCloud)
+//        run(action, withKey: "action")
+        run(actionCloud) {
+            self.run(actionCloudRepeat)
+            self.run(action)
+        }
         
         kite = self.childNode(withName: "kite") as! SKSpriteNode
         
@@ -42,6 +59,19 @@ class GameScene: SKScene {
         kite.physicsBody?.restitution = 0.5
         
         scoreLabel = self.childNode(withName: "scoreLabel") as! SKLabelNode
+    }
+    
+    func generateClouds() {
+        let posX = Int(arc4random_uniform(320))-180
+        let size = CGSize(width: 300, height: 300)
+        let actionMove = SKAction.move(to: CGPoint(x: posX, y: -1000), duration: TimeInterval(20))
+        let actionMoveDone = SKAction.removeFromParent()
+        let cloudsString = arrayClouds.randomElement()
+        let clouds = SKSpriteNode(imageNamed: cloudsString)
+        clouds.position = CGPoint(x: posX, y: 500)
+        clouds.scale(to: size)
+        addChild(clouds)
+        clouds.run(SKAction.sequence([actionMove,actionMoveDone]))
     }
     
     func generateObstacle(){
@@ -58,6 +88,9 @@ class GameScene: SKScene {
         obstacles.physicsBody?.contactTestBitMask = PhysicsCategory.kite
         obstacles.physicsBody?.restitution = 0.5
         obstacles.physicsBody?.allowsRotation = true
+        
+     
+
         
         addChild(obstacles)
         
