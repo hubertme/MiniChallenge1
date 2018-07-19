@@ -16,8 +16,6 @@ class LoadingScreenViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
-        
         createLoadingAnimation()
         
         DispatchQueue.main.asyncAfter(deadline:.now() + 2.0, execute: {
@@ -33,10 +31,14 @@ class LoadingScreenViewController: UIViewController {
     }
 
     func createLoadingAnimation() {
+        let maxWidth = view.frame.maxX
+        let maxHeight = view.frame.maxY
+        
         emojiAnimation = LOTAnimationView(name: "emojiJoy")
         emojiAnimation!.autoresizingMask = [.flexibleHeight, .flexibleWidth]
         emojiAnimation!.contentMode = .scaleAspectFit
         emojiAnimation!.frame = view.bounds
+        emojiAnimation!.frame = CGRect(x: maxWidth/2 - 100, y: maxHeight - 200, width: 200, height: 200)
         emojiAnimation!.loopAnimation = true
         view.addSubview(emojiAnimation!)
         emojiAnimation!.play()
