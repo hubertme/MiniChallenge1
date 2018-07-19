@@ -46,11 +46,11 @@ class GameScene: SKScene {
     
     func generateObstacle(){
         let posX = Int(arc4random_uniform(320))-180
-        let size = CGSize(width: 100, height: 100)
+        let size = CGSize(width: 60, height: 60)
         let obstacles = SKSpriteNode(imageNamed: "water")
         obstacles.scale(to: size)
         obstacles.position = CGPoint(x: posX, y: 420)
-        obstacles.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: 100, height: 100))
+        obstacles.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: 50, height: 50))
         
         obstacles.physicsBody?.isDynamic = true
         obstacles.physicsBody?.collisionBitMask = PhysicsCategory.none
@@ -95,7 +95,7 @@ class GameScene: SKScene {
 
 extension GameScene: SKPhysicsContactDelegate{
     func didBegin(_ contact: SKPhysicsContact) {
-        if (contact.collisionImpulse >= 1.0) && (contact.bodyA.categoryBitMask == PhysicsCategory.kite) && (contact.bodyB.categoryBitMask == PhysicsCategory.obstacles) {
+        if (contact.collisionImpulse >= 0.8) && (contact.bodyA.categoryBitMask == PhysicsCategory.kite) && (contact.bodyB.categoryBitMask == PhysicsCategory.obstacles) {
             print("Hit!")
             isOver=true
             removeAction(forKey: "action")

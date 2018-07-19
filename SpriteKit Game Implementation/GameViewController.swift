@@ -34,9 +34,9 @@ class GameViewController: UIViewController  {
         
     }
     
-    override var shouldAutorotate: Bool {
-        return false
-    }
+//    override var shouldAutorotate: Bool {
+//        return false
+//    }
     
     //    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
     //        if UIDevice.current.userInterfaceIdiom == .phone {
