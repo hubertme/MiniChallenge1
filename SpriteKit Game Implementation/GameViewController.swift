@@ -22,7 +22,7 @@ class GameViewController: UIViewController  {
         
         self.view.backgroundColor = UIColor.black
         label.font = UIFont(name: "Helvetica", size: 40)
-        label.frame = CGRect(x: 73, y: 288, width: 229, height: 90)
+        label.frame = CGRect(x: 73, y: 351, width: 229, height: 90)
         label.textAlignment = NSTextAlignment(rawValue: 1)!
         label.text = "Tap to Start"
         label.alpha = 1

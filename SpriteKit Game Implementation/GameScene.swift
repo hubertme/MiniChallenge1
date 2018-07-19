@@ -115,14 +115,24 @@ extension GameScene: SKPhysicsContactDelegate{
     //Tap Recognizer
     func gameOver() {
         print("ended")
-        let gameOverLabel = SKLabelNode(fontNamed: "Helvetica")
+        let gameOverLabel = SKLabelNode(fontNamed: "Helvetica-Bold")
         gameOverLabel.position = CGPoint(x: 0, y: 0)
         gameOverLabel.fontColor = UIColor.white
         gameOverLabel.fontSize = 40
         gameOverLabel.alpha = 1
+        
 //        UIView.animate(withDuration: 2) {
 //            gameOverLabel.alpha = 1
 //        }
+        UIView.animate(withDuration: 2) {
+            let infoLabel = SKLabelNode(fontNamed: "Helvetica-Thin")
+            infoLabel.position = CGPoint(x: 0, y: -35)
+            infoLabel.fontSize = 25
+            infoLabel.alpha = 1
+            infoLabel.fontColor = UIColor.white
+            infoLabel.text = "Tap to Restart 🚀"
+            self.addChild(infoLabel)
+        }
         addChild(gameOverLabel)
         if !(isOver){
             gameOverLabel.text = "You Win! 😄"
@@ -132,5 +142,6 @@ extension GameScene: SKPhysicsContactDelegate{
         else{
             gameOverLabel.text = "You Lose 😢"
         }
+        
     }
 }
