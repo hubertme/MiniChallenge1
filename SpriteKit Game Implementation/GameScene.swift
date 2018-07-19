@@ -42,13 +42,12 @@ class GameScene: SKScene {
         second = 0
         isOver=false
         
-        let action = SKAction.repeatForever(SKAction.sequence([SKAction.wait(forDuration: 0.8), SKAction.run(generateObstacle), SKAction.run(updateScore)]))
+        let action = SKAction.repeatForever(SKAction.sequence([SKAction.wait(forDuration: 1), SKAction.run(generateObstacle), SKAction.run(updateScore), SKAction.run(checkWin)]))
         
         let actionCloudRepeat = SKAction.repeatForever(SKAction.sequence([SKAction.wait(forDuration: 7), SKAction.run(generateClouds)]))
         let actionCloud = SKAction.sequence([SKAction.wait(forDuration: 2),SKAction.run(generateClouds)])
-//        run(actionCloud)
-//        run(action, withKey: "action")
-        run(actionCloud) {
+        
+        run(actionCloud){
             self.run(actionCloudRepeat)
             self.run(action)
         }
@@ -91,9 +90,6 @@ class GameScene: SKScene {
         obstacles.physicsBody?.restitution = 0.5
         obstacles.physicsBody?.allowsRotation = true
         
-     
-
-        
         addChild(obstacles)
         
         switch second {
@@ -128,8 +124,8 @@ class GameScene: SKScene {
     }
     
     func checkWin(){
-        if (second==20){
-            removeAction(forKey: "action")
+        if (second==10){
+            removeAllActions()
             gameOver()
         }
     }
@@ -140,7 +136,7 @@ extension GameScene: SKPhysicsContactDelegate{
         if (contact.collisionImpulse >= 0.8) && (contact.bodyA.categoryBitMask == PhysicsCategory.kite) && (contact.bodyB.categoryBitMask == PhysicsCategory.obstacles) {
             print("Hit!")
             isOver=true
-            removeAction(forKey: "action")
+            removeAllActions()
             gameOver()
         }
     }
