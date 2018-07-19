@@ -141,7 +141,7 @@ extension GameScene: SKPhysicsContactDelegate{
         
         let fadeIn = SKAction.fadeAlpha(to: 1, duration: 0.5)
         let fadeOut = SKAction.fadeAlpha(to: 0.3, duration: 0.5)
-        run(SKAction.sequence([fadeIn,SKAction.wait(forDuration: 0.2),fadeOut]))
+        run(SKAction.repeatForever(SKAction.sequence([fadeIn,SKAction.wait(forDuration: 0.2),fadeOut])))
         
     }
 }
