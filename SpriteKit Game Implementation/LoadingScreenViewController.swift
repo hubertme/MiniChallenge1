@@ -15,11 +15,18 @@ class LoadingScreenViewController: UIViewController {
     private var emojiAnimation: LOTAnimationView?
     var sayCheeseSoundEffect: AVAudioPlayer?
     
+    @IBOutlet weak var kiteLogo: UIImageView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         createLoadingAnimation()
         
+        let maxWidth = view.frame.maxX
+        let maxHeight = view.frame.maxY
+        
+        kiteLogo.transform = CGAffineTransform(scaleX: -1, y: 1)
+        kiteLogo.frame = CGRect(x: maxWidth/2 - 100, y: maxHeight/2 - 150, width: 300, height: 300)
         
         DispatchQueue.main.asyncAfter(deadline:.now() + 2.0, execute: {
             print("Masuk")

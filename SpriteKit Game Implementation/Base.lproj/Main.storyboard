@@ -17,10 +17,17 @@
                     <view key="view" contentMode="scaleToFill" id="ShT-OP-D4C">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="kite" translatesAutoresizingMaskIntoConstraints="NO" id="YPU-PR-1MH">
+                                <rect key="frame" x="67" y="269" width="240" height="128"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="35f-2d-X8a"/>
                     </view>
                     <connections>
+                        <outlet property="kiteLogo" destination="YPU-PR-1MH" id="6wG-p0-ybT"/>
                         <segue destination="BV1-FR-VrT" kind="show" identifier="mainGameSegue" id="LRj-bE-Oe7"/>
                     </connections>
                 </viewController>
@@ -43,4 +50,7 @@
             </objects>
         </scene>
     </scenes>
+    <resources>
+        <image name="kite" width="541" height="600"/>
+    </resources>
 </document>
