@@ -14,7 +14,7 @@ var kite = SKSpriteNode()
 
 var second = 0
 var scoreLabel = SKLabelNode()
-var isOver=false
+var isOver=true
 
 struct PhysicsCategory {
     static let none: UInt32 = 0
@@ -24,14 +24,16 @@ struct PhysicsCategory {
 }
 
 class GameScene: SKScene {
-    
+    let tapGesture = UIGestureRecognizer()
     let motionManager = CMMotionManager()
+    
     override func didMove(to view: SKView) {
         physicsWorld.contactDelegate = self
         
         second = 0
+        isOver=false
         
-        let action = SKAction.repeatForever(SKAction.sequence([SKAction.wait(forDuration: 0.8), SKAction.run(generateObstacle), SKAction.run(updateScore)]))
+        let action = SKAction.repeatForever(SKAction.sequence([SKAction.wait(forDuration: 1), SKAction.run(generateObstacle), SKAction.run(updateScore), SKAction.run(checkWin)]))
         run(action, withKey: "action")
         
         kite = self.childNode(withName: "kite") as! SKSpriteNode
@@ -50,7 +52,7 @@ class GameScene: SKScene {
         let obstacles = SKSpriteNode(imageNamed: "water")
         obstacles.scale(to: size)
         obstacles.position = CGPoint(x: posX, y: 420)
-        obstacles.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: 50, height: 50))
+        obstacles.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: 60, height: 60))
         
         obstacles.physicsBody?.isDynamic = true
         obstacles.physicsBody?.collisionBitMask = PhysicsCategory.none
@@ -91,6 +93,13 @@ class GameScene: SKScene {
         print("\(second) s")
         scoreLabel.text = "\(second) s"
     }
+    
+    func checkWin(){
+        if (second==20){
+            removeAction(forKey: "action")
+            gameOver()
+        }
+    }
 }
 
 extension GameScene: SKPhysicsContactDelegate{
@@ -99,23 +108,29 @@ extension GameScene: SKPhysicsContactDelegate{
             print("Hit!")
             isOver=true
             removeAction(forKey: "action")
-            
-            //MARK : GameOver
-            let gameOverLabel = SKLabelNode(fontNamed: "Helvetica")
-            gameOverLabel.position = CGPoint(x: 0, y: 0)
-            gameOverLabel.text = "Game Over :("
-            gameOverLabel.fontColor = UIColor.white
-            gameOverLabel.fontSize = 40
-            gameOverLabel.alpha = 0
-            UIView.animate(withDuration: 2) {
-                gameOverLabel.alpha = 1
-            }
-            addChild(gameOverLabel)
+            gameOver()
         }
     }
     
     //Tap Recognizer
-    func tappedView (_ sender: UITapGestureRecognizer){
-        
+    func gameOver() {
+        print("ended")
+        let gameOverLabel = SKLabelNode(fontNamed: "Helvetica")
+        gameOverLabel.position = CGPoint(x: 0, y: 0)
+        gameOverLabel.fontColor = UIColor.white
+        gameOverLabel.fontSize = 40
+        gameOverLabel.alpha = 1
+//        UIView.animate(withDuration: 2) {
+//            gameOverLabel.alpha = 1
+//        }
+        addChild(gameOverLabel)
+        if !(isOver){
+            gameOverLabel.text = "You Win! 😄"
+            kite.physicsBody?.collisionBitMask = PhysicsCategory.none
+            isOver = true
+        }
+        else{
+            gameOverLabel.text = "You Lose 😢"
+        }
     }
 }

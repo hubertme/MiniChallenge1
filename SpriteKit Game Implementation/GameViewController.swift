@@ -31,7 +31,6 @@ class GameViewController: UIViewController  {
         
         tapGesture.addTarget(self, action: #selector(startGame))
         self.view.addGestureRecognizer(tapGesture)
-        
     }
     
 //    override var shouldAutorotate: Bool {
@@ -78,17 +77,20 @@ class GameViewController: UIViewController  {
     }
     
     @objc func startGame(){
-        UIView.animate(withDuration: 1) {
-            self.label.removeFromSuperview()
-        }
-        if let view = self.view as! SKView? {
-            // Load the SKScene from 'GameScene.sks'
-            if let scene = SKScene(fileNamed: "GameScene") {
-                scene.scaleMode = .aspectFill
-                
-                view.presentScene(scene)
+        if (isOver){
+            isOver=false
+            UIView.animate(withDuration: 1) {
+                self.label.removeFromSuperview()
             }
-            view.ignoresSiblingOrder = true
+            if let view = self.view as! SKView? {
+                // Load the SKScene from 'GameScene.sks'
+                if let scene = SKScene(fileNamed: "GameScene") {
+                    scene.scaleMode = .aspectFill
+                    
+                    view.presentScene(scene)
+                }
+                view.ignoresSiblingOrder = true
+            }
         }
     }
 //    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
