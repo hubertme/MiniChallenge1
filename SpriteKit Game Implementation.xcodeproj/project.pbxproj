@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		704984FFAC0EAE02E40611AA /* Pods_SpriteKit_Game_Implementation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A268F9F31550E969C6529DE2 /* Pods_SpriteKit_Game_Implementation.framework */; };
+		92B438A121004CA600AE144E /* saycheese.wav in Resources */ = {isa = PBXBuildFile; fileRef = 92B438A021004CA600AE144E /* saycheese.wav */; };
 		92E5DC5521002451007E058F /* emojiJoy.json in Resources */ = {isa = PBXBuildFile; fileRef = 92E5DC5421002450007E058F /* emojiJoy.json */; };
 		92E5DC5721002485007E058F /* LoadingScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E5DC5621002485007E058F /* LoadingScreenViewController.swift */; };
 		E4134C5E20FEDD2F00DFAF88 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4134C5D20FEDD2F00DFAF88 /* AppDelegate.swift */; };
@@ -23,6 +24,7 @@
 /* Begin PBXFileReference section */
 		2E7ECFE8E5B8BB4096B46AD4 /* Pods-SpriteKit Game Implementation.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SpriteKit Game Implementation.release.xcconfig"; path = "Pods/Target Support Files/Pods-SpriteKit Game Implementation/Pods-SpriteKit Game Implementation.release.xcconfig"; sourceTree = "<group>"; };
 		41C5F4582196680DE7437F9B /* Pods-SpriteKit Game Implementation.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SpriteKit Game Implementation.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SpriteKit Game Implementation/Pods-SpriteKit Game Implementation.debug.xcconfig"; sourceTree = "<group>"; };
+		92B438A021004CA600AE144E /* saycheese.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = saycheese.wav; sourceTree = "<group>"; };
 		92E5DC5421002450007E058F /* emojiJoy.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = emojiJoy.json; sourceTree = "<group>"; };
 		92E5DC5621002485007E058F /* LoadingScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingScreenViewController.swift; sourceTree = "<group>"; };
 		A268F9F31550E969C6529DE2 /* Pods_SpriteKit_Game_Implementation.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SpriteKit_Game_Implementation.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -88,6 +90,7 @@
 		E4134C5C20FEDD2F00DFAF88 /* SpriteKit Game Implementation */ = {
 			isa = PBXGroup;
 			children = (
+				92B438A021004CA600AE144E /* saycheese.wav */,
 				92E5DC5421002450007E058F /* emojiJoy.json */,
 				E4134C5D20FEDD2F00DFAF88 /* AppDelegate.swift */,
 				E4134C5F20FEDD2F00DFAF88 /* GameScene.sks */,
@@ -167,6 +170,7 @@
 				E4134C6020FEDD2F00DFAF88 /* GameScene.sks in Resources */,
 				E4134C6B20FEDD3100DFAF88 /* Assets.xcassets in Resources */,
 				92E5DC5521002451007E058F /* emojiJoy.json in Resources */,
+				92B438A121004CA600AE144E /* saycheese.wav in Resources */,
 				E4134C6E20FEDD3100DFAF88 /* LaunchScreen.storyboard in Resources */,
 				E4134C6220FEDD2F00DFAF88 /* Actions.sks in Resources */,
 			);
@@ -367,13 +371,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 8WF8BJSYNB;
+				DEVELOPMENT_TEAM = 38JDN46T58;
 				INFOPLIST_FILE = "SpriteKit Game Implementation/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = hubertwangg.minichallenge1;
+				PRODUCT_BUNDLE_IDENTIFIER = alvinjulian.minichallenge1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -386,13 +390,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 8WF8BJSYNB;
+				DEVELOPMENT_TEAM = 38JDN46T58;
 				INFOPLIST_FILE = "SpriteKit Game Implementation/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = hubertwangg.minichallenge1;
+				PRODUCT_BUNDLE_IDENTIFIER = alvinjulian.minichallenge1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
