@@ -22,7 +22,7 @@ class GameViewController: UIViewController  {
         
         self.view.backgroundColor = UIColor.black
         label.font = UIFont(name: "Helvetica", size: 40)
-        label.frame = CGRect(x: 73, y: 288, width: 229, height: 90)
+        label.frame = CGRect(x: 73, y: 351, width: 229, height: 90)
         label.textAlignment = NSTextAlignment(rawValue: 1)!
         label.text = "Tap to Start"
         label.alpha = 1
@@ -31,7 +31,6 @@ class GameViewController: UIViewController  {
         
         tapGesture.addTarget(self, action: #selector(startGame))
         self.view.addGestureRecognizer(tapGesture)
-        
     }
     
 //    override var shouldAutorotate: Bool {
@@ -78,25 +77,21 @@ class GameViewController: UIViewController  {
     }
     
     @objc func startGame(){
-        UIView.animate(withDuration: 1) {
-            self.label.removeFromSuperview()
-        }
-        if let view = self.view as! SKView? {
-            // Load the SKScene from 'GameScene.sks'
-            if let scene = SKScene(fileNamed: "GameScene") {
-                scene.scaleMode = .aspectFill
-                
-                view.presentScene(scene)
+        if (isOver){
+            isOver=false
+            UIView.animate(withDuration: 1) {
+                self.label.removeFromSuperview()
             }
-            view.ignoresSiblingOrder = true
+            if let view = self.view as! SKView? {
+                // Load the SKScene from 'GameScene.sks'
+                if let scene = SKScene(fileNamed: "GameScene") {
+                    scene.scaleMode = .aspectFill
+                    
+                    view.presentScene(scene)
+                }
+                view.ignoresSiblingOrder = true
+            }
         }
     }
-//    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-//        isOver=false
-//        if (isOver){
-//            let gameScene = GameScene(size: self.view.bounds.size)
-//            let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
-//            self.view?.present(gameScene, transition:reveal)
-//        }
-//    }
+
 }

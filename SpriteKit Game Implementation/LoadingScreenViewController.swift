@@ -6,19 +6,20 @@
 //  Copyright © 2018 Hubert Wang. All rights reserved.
 //
 
+import AVFoundation
 import UIKit
 import Lottie
 
 class LoadingScreenViewController: UIViewController {
 
     private var emojiAnimation: LOTAnimationView?
+    var sayCheeseSoundEffect: AVAudioPlayer?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
-        
         createLoadingAnimation()
+        
         
         DispatchQueue.main.asyncAfter(deadline:.now() + 2.0, execute: {
             print("Masuk")
@@ -33,13 +34,26 @@ class LoadingScreenViewController: UIViewController {
     }
 
     func createLoadingAnimation() {
+        let maxWidth = view.frame.maxX
+        let maxHeight = view.frame.maxY
+        
         emojiAnimation = LOTAnimationView(name: "emojiJoy")
         emojiAnimation!.autoresizingMask = [.flexibleHeight, .flexibleWidth]
         emojiAnimation!.contentMode = .scaleAspectFit
         emojiAnimation!.frame = view.bounds
+        emojiAnimation!.frame = CGRect(x: maxWidth/2 - 100, y: maxHeight - 200, width: 200, height: 200)
         emojiAnimation!.loopAnimation = true
         view.addSubview(emojiAnimation!)
         emojiAnimation!.play()
+        let path = Bundle.main.path(forResource: "saycheese.wav", ofType:nil)!
+        let url = URL(fileURLWithPath: path)
+        
+        do {
+            sayCheeseSoundEffect = try AVAudioPlayer(contentsOf: url)
+            sayCheeseSoundEffect?.play()
+        } catch {
+            // couldn't load file :(
+        }
     }
     
     /*
