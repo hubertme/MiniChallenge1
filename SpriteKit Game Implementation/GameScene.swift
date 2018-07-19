@@ -120,20 +120,16 @@ extension GameScene: SKPhysicsContactDelegate{
         gameOverLabel.fontColor = UIColor.white
         gameOverLabel.fontSize = 40
         gameOverLabel.alpha = 1
-        
-//        UIView.animate(withDuration: 2) {
-//            gameOverLabel.alpha = 1
-//        }
-        UIView.animate(withDuration: 2) {
-            let infoLabel = SKLabelNode(fontNamed: "Helvetica-Thin")
-            infoLabel.position = CGPoint(x: 0, y: -35)
-            infoLabel.fontSize = 25
-            infoLabel.alpha = 1
-            infoLabel.fontColor = UIColor.white
-            infoLabel.text = "Tap to Restart 🚀"
-            self.addChild(infoLabel)
-        }
         addChild(gameOverLabel)
+        
+        let infoLabel = SKLabelNode(fontNamed: "Helvetica-Thin")
+        infoLabel.position = CGPoint(x: 0, y: -35)
+        infoLabel.fontSize = 25
+        infoLabel.alpha = 1
+        infoLabel.fontColor = UIColor.white
+        infoLabel.text = "Tap to Restart 🚀"
+        self.addChild(infoLabel)
+        
         if !(isOver){
             gameOverLabel.text = "You Win! 😄"
             kite.physicsBody?.collisionBitMask = PhysicsCategory.none
@@ -142,6 +138,10 @@ extension GameScene: SKPhysicsContactDelegate{
         else{
             gameOverLabel.text = "You Lose 😢"
         }
+        
+        let fadeIn = SKAction.fadeAlpha(to: 1, duration: 0.5)
+        let fadeOut = SKAction.fadeAlpha(to: 0.3, duration: 0.5)
+        run(SKAction.sequence([fadeIn,SKAction.wait(forDuration: 0.2),fadeOut]))
         
     }
 }

@@ -93,12 +93,5 @@ class GameViewController: UIViewController  {
             }
         }
     }
-//    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-//        isOver=false
-//        if (isOver){
-//            let gameScene = GameScene(size: self.view.bounds.size)
-//            let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
-//            self.view?.present(gameScene, transition:reveal)
-//        }
-//    }
+
 }
