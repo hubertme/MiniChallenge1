@@ -20,7 +20,7 @@ class LoadingScreenViewController: UIViewController {
         
         createLoadingAnimation()
         
-        DispatchQueue.main.asyncAfter(deadline:.now() + 5.0, execute: {
+        DispatchQueue.main.asyncAfter(deadline:.now() + 2.0, execute: {
             print("Masuk")
             self.performSegue(withIdentifier:"mainGameSegue",sender: self)
         })

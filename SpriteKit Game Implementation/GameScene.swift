@@ -24,13 +24,14 @@ struct PhysicsCategory {
 }
 
 class GameScene: SKScene {
+    
     let motionManager = CMMotionManager()
     override func didMove(to view: SKView) {
         physicsWorld.contactDelegate = self
         
         second = 0
         
-        let action = SKAction.repeatForever(SKAction.sequence([SKAction.run(generateObstacle), SKAction.run(updateScore), SKAction.wait(forDuration: 1.0)]))
+        let action = SKAction.repeatForever(SKAction.sequence([SKAction.wait(forDuration: 0.8), SKAction.run(generateObstacle), SKAction.run(updateScore)]))
         run(action, withKey: "action")
         
         kite = self.childNode(withName: "kite") as! SKSpriteNode
@@ -58,10 +59,28 @@ class GameScene: SKScene {
         
         addChild(obstacles)
         
-        let time = Int(arc4random_uniform(4))+2
-        let actionMove = SKAction.move(to: CGPoint(x: posX, y: -1000), duration: TimeInterval(time))
-        let actionMoveDone = SKAction.removeFromParent()
-        obstacles.run(SKAction.sequence([actionMove,actionMoveDone]))
+        switch second {
+        case 0..<5:
+            let time = Int(arc4random_uniform(4))+4
+            let actionMove = SKAction.move(to: CGPoint(x: posX, y: -1000), duration: TimeInterval(time))
+            let actionMoveDone = SKAction.removeFromParent()
+            obstacles.run(SKAction.sequence([actionMove,actionMoveDone]))
+        case 5..<10:
+            let time = Int(arc4random_uniform(4))+3
+            let actionMove = SKAction.move(to: CGPoint(x: posX, y: -1000), duration: TimeInterval(time))
+            let actionMoveDone = SKAction.removeFromParent()
+            obstacles.run(SKAction.sequence([actionMove,actionMoveDone]))
+        case 10..<15:
+            let time = Int(arc4random_uniform(4))+2
+            let actionMove = SKAction.move(to: CGPoint(x: posX, y: -1000), duration: TimeInterval(time))
+            let actionMoveDone = SKAction.removeFromParent()
+            obstacles.run(SKAction.sequence([actionMove,actionMoveDone]))
+        default:
+            let time = Int(arc4random_uniform(4))+1
+            let actionMove = SKAction.move(to: CGPoint(x: posX, y: -1000), duration: TimeInterval(time))
+            let actionMoveDone = SKAction.removeFromParent()
+            obstacles.run(SKAction.sequence([actionMove,actionMoveDone]))
+        }
         
     }
     
@@ -74,10 +93,12 @@ class GameScene: SKScene {
 
 extension GameScene: SKPhysicsContactDelegate{
     func didBegin(_ contact: SKPhysicsContact) {
-        if (contact.bodyA.categoryBitMask == PhysicsCategory.kite && contact.bodyB.categoryBitMask == PhysicsCategory.obstacles) {
+        if (contact.collisionImpulse >= 1.0) && (contact.bodyA.categoryBitMask == PhysicsCategory.kite) && (contact.bodyB.categoryBitMask == PhysicsCategory.obstacles) {
             print("Hit!")
             isOver=true
             removeAction(forKey: "action")
+            
+            //MARK : GameOver
             let gameOverLabel = SKLabelNode(fontNamed: "Helvetica")
             gameOverLabel.position = CGPoint(x: 0, y: 0)
             gameOverLabel.text = "Game Over :("
@@ -89,5 +110,10 @@ extension GameScene: SKPhysicsContactDelegate{
             }
             addChild(gameOverLabel)
         }
+    }
+    
+    //Tap Recognizer
+    func tappedView (_ sender: UITapGestureRecognizer){
+        
     }
 }

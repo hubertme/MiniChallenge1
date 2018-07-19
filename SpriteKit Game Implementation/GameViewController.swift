@@ -14,18 +14,24 @@ import CoreMotion
 class GameViewController: UIViewController  {
     
     let motionManager = CMMotionManager()
+    let tapGesture = UITapGestureRecognizer()
+    let label = UILabel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        if let view = self.view as! SKView? {
-            // Load the SKScene from 'GameScene.sks'
-            if let scene = SKScene(fileNamed: "GameScene") {
-                scene.scaleMode = .aspectFill
-                
-                view.presentScene(scene)
-            }
-            view.ignoresSiblingOrder = true
-        }
+        
+        self.view.backgroundColor = UIColor.black
+        label.font = UIFont(name: "Helvetica", size: 40)
+        label.frame = CGRect(x: 73, y: 288, width: 229, height: 90)
+        label.textAlignment = NSTextAlignment(rawValue: 1)!
+        label.text = "Tap to Start"
+        label.alpha = 1
+        label.textColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+        self.view.addSubview(label)
+        
+        tapGesture.addTarget(self, action: #selector(startGame))
+        self.view.addGestureRecognizer(tapGesture)
+        
     }
     
     override var shouldAutorotate: Bool {
@@ -68,6 +74,21 @@ class GameViewController: UIViewController  {
                     kite.position.x = (375/2)-(25*1.41)
                 }
             }
+        }
+    }
+    
+    @objc func startGame(){
+        UIView.animate(withDuration: 1) {
+            self.label.removeFromSuperview()
+        }
+        if let view = self.view as! SKView? {
+            // Load the SKScene from 'GameScene.sks'
+            if let scene = SKScene(fileNamed: "GameScene") {
+                scene.scaleMode = .aspectFill
+                
+                view.presentScene(scene)
+            }
+            view.ignoresSiblingOrder = true
         }
     }
 //    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
