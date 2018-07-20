@@ -10,8 +10,13 @@ import UIKit
 import SpriteKit
 import GameplayKit
 import CoreMotion
+import AVFoundation
+
 
 class GameViewController: UIViewController  {
+    
+    var sayCheeseSoundEffect: AVAudioPlayer?
+
     
     let motionManager = CMMotionManager()
     let tapGesture = UITapGestureRecognizer()
@@ -19,6 +24,15 @@ class GameViewController: UIViewController  {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        let path = Bundle.main.path(forResource: "Tahoe.mp3", ofType:nil)!
+        let url = URL(fileURLWithPath: path)
+        
+        do {
+            sayCheeseSoundEffect = try AVAudioPlayer(contentsOf: url)
+            sayCheeseSoundEffect?.play()
+        } catch {
+            // couldn't load file :(
+        }
         
         self.view.backgroundColor = UIColor.black
         label.font = UIFont(name: "Helvetica", size: 40)
@@ -61,6 +75,7 @@ class GameViewController: UIViewController  {
     }
     
     override func viewDidAppear(_ animated: Bool) {
+       
         motionManager.accelerometerUpdateInterval = 0.01
         motionManager.startAccelerometerUpdates(to: OperationQueue.current!) { (data, error) in
             if let myData = data {

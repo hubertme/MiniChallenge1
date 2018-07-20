@@ -35,6 +35,7 @@ struct PhysicsCategory {
 
 class GameScene: SKScene {
     
+    
    
     let arrayClouds = ["clouds1","clouds3","clouds4","clouds5","clouds9","clouds7"]
     
@@ -43,6 +44,7 @@ class GameScene: SKScene {
     let tail = SKSpriteNode(color: UIColor.white, size: CGSize(width: 1, height: 400))
     
     override func didMove(to view: SKView) {
+        
         self.scene?.backgroundColor = #colorLiteral(red: 0.6161276698, green: 0.9302651286, blue: 1, alpha: 1)
 //        self.physicsBody = SKPhysicsBody(edgeLoopFrom: self.frame)
       
@@ -194,7 +196,7 @@ class GameScene: SKScene {
     }
     
     func checkWin(){
-        if (second==6){
+        if (second==20){
 //            removeAction(forKey: "action")
             removeAllActions()
             gameOver()
