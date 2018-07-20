@@ -9,6 +9,7 @@
 import SpriteKit
 import GameplayKit
 import CoreMotion
+import AVFoundation
 
 //  Get random element from array
 extension Array {
@@ -180,7 +181,7 @@ class GameScene: SKScene {
     }
     
     func checkWin(){
-        if (second==20){
+        if (second==6){
 //            removeAction(forKey: "action")
             removeAllActions()
             gameOver()
@@ -205,33 +206,34 @@ extension GameScene: SKPhysicsContactDelegate{
     //Tap Recognizer
     func gameOver() {
         print("ended")
-        let gameOverLabel = SKLabelNode(fontNamed: "Helvetica-Bold")
-        gameOverLabel.position = CGPoint(x: 0, y: 0)
-        gameOverLabel.fontColor = UIColor.white
-        gameOverLabel.fontSize = 40
-        gameOverLabel.alpha = 1
-        addChild(gameOverLabel)
-        
-        let infoLabel = SKLabelNode(fontNamed: "Helvetica-Thin")
-        infoLabel.position = CGPoint(x: 0, y: -35)
-        infoLabel.fontSize = 25
-        infoLabel.alpha = 1
-        infoLabel.fontColor = UIColor.white
-        infoLabel.text = "Tap to Restart 🚀"
-        self.addChild(infoLabel)
+//        let infoLabel = SKLabelNode(fontNamed: "Helvetica-Thin")
+//        infoLabel.position = CGPoint(x: 0, y: -35)
+//        infoLabel.fontSize = 25
+//        infoLabel.alpha = 1
+//        infoLabel.fontColor = UIColor.white
+//        infoLabel.text = "Tap to Restart 🚀"
+//        self.addChild(infoLabel)
         
         if !(isOver){
-            gameOverLabel.text = "You Win! 😄"
+//            gameOverLabel.text = "You Win! 😄"
+            run(SKAction.playSoundFileNamed("winningSound.wav", waitForCompletion: false))
+            let sun = SKSpriteNode(imageNamed: "sun")
+            addChild(sun)
+            
+            sun.position = CGPoint(x: 0, y: 600)
+            sun.size = CGSize(width: 300, height: 300)
+            sun.run(SKAction.move(to: CGPoint(x: 0, y: 10), duration: 8))
             kite.physicsBody?.collisionBitMask = PhysicsCategory.none
             isOver = true
         }
         else{
-            gameOverLabel.text = "You Lose 😢"
+            let loseSoundEffect = SKAction.playSoundFileNamed("losingSound.wav", waitForCompletion: false)
+            run(loseSoundEffect)
         }
         
-        let fadeIn = SKAction.fadeAlpha(to: 1, duration: 0.5)
-        let fadeOut = SKAction.fadeAlpha(to: 0.3, duration: 0.5)
-        run(SKAction.repeatForever(SKAction.sequence([fadeIn,SKAction.wait(forDuration: 0.2),fadeOut])))
+//        let fadeIn = SKAction.fadeAlpha(to: 1, duration: 0.5)
+//        let fadeOut = SKAction.fadeAlpha(to: 0.3, duration: 0.5)
+//        run(SKAction.repeatForever(SKAction.sequence([fadeIn,SKAction.wait(forDuration: 0.2),fadeOut])))
         
     }
 }
