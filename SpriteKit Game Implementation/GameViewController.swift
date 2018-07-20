@@ -72,7 +72,7 @@ class GameViewController: UIViewController  {
                   
                   
                     //  Limiting the rotation value of the kite
-                    let rotationRange = SKRange(lowerLimit: 20.toRadian, upperLimit: 70.toRadian)
+                    let rotationRange = SKRange(lowerLimit: -15.toRadian, upperLimit: 15.toRadian)
                     let lockRotation = SKConstraint.zRotation(rotationRange)
                     kite.constraints = [ lockRotation ]
                   
@@ -81,7 +81,7 @@ class GameViewController: UIViewController  {
 //                    tail.position.x += CGFloat((myData.acceleration.x) * mult)
                   
                     //  Add rotation when the kite moves
-                    kite.zRotation += (4 * -(myData.acceleration.x)).toRadian
+                    kite.zRotation += (2 * -(myData.acceleration.x)).toRadian
                   
                 }
                 else if (kite.position.x < 0){
