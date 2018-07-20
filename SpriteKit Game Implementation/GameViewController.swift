@@ -15,52 +15,28 @@ import AVFoundation
 
 class GameViewController: UIViewController  {
     
-    var sayCheeseSoundEffect: AVAudioPlayer?
+    var inGameBackground: AVAudioPlayer?
 
     
     let motionManager = CMMotionManager()
     let tapGesture = UITapGestureRecognizer()
-    let label = UILabel()
     
     override func viewDidLoad() {
-        super.viewDidLoad()
+//        super.viewDidLoad()
         let path = Bundle.main.path(forResource: "Tahoe.mp3", ofType:nil)!
         let url = URL(fileURLWithPath: path)
         
         do {
-            sayCheeseSoundEffect = try AVAudioPlayer(contentsOf: url)
-            sayCheeseSoundEffect?.play()
-        } catch {
-            // couldn't load file :(
+            inGameBackground = try AVAudioPlayer(contentsOf: url)
+            inGameBackground?.numberOfLoops = -1
+            inGameBackground?.play()
+        } catch{
+            
         }
-        
-        self.view.backgroundColor = UIColor.black
-        label.font = UIFont(name: "Helvetica", size: 40)
-        label.frame = CGRect(x: 73, y: 351, width: 229, height: 90)
-        label.textAlignment = NSTextAlignment(rawValue: 1)!
-        label.text = "Tap to Start"
-        label.alpha = 1
-        label.textColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
-        self.view.addSubview(label)
         
         tapGesture.addTarget(self, action: #selector(startGame))
         self.view.addGestureRecognizer(tapGesture)
-      
-      
-      
     }
-    
-//    override var shouldAutorotate: Bool {
-//        return false
-//    }
-    
-    //    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-    //        if UIDevice.current.userInterfaceIdiom == .phone {
-    //            return .allButUpsideDown
-    //        } else {
-    //            return .all
-    //        }
-    //    }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -114,9 +90,6 @@ class GameViewController: UIViewController  {
         if (isOver){
             isOver=false
             kite.position=CGPoint(x: 0, y: -175)
-            UIView.animate(withDuration: 1) {
-                self.label.removeFromSuperview()
-            }
             if let view = self.view as! SKView? {
                 // Load the SKScene from 'GameScene.sks'
                 if let scene = SKScene(fileNamed: "GameScene") {

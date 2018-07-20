@@ -90,7 +90,8 @@ class GameScene: SKScene {
         tail.position = CGPoint(x: kite.position.x, y: kite.position.y - 200)
         tail.physicsBody?.isDynamic = true
         tail.color = UIColor.white
-        tail.physicsBody?.collisionBitMask = 0
+        tail.physicsBody?.collisionBitMask = PhysicsCategory.none
+        tail.physicsBody?.contactTestBitMask = PhysicsCategory.none
         tail.zPosition = -1
     
         addChild(tail)
@@ -176,14 +177,13 @@ class GameScene: SKScene {
     
     func updateScore(){
         second+=1
-        print("Energy: \(second)")
+        if (second<0){
+            second = 0
+        }
         scoreLabel.text = "Energy: \(second)"
     }
     
     func checkWin(){
-        if (second<0){
-            second = 0
-        }
         if (second==20){
             removeAllActions()
             gameOver()
@@ -198,20 +198,19 @@ class GameScene: SKScene {
 
 extension GameScene: SKPhysicsContactDelegate{
     func didBegin(_ contact: SKPhysicsContact) {
-        if (contact.collisionImpulse >= 0.4) /*&& (contact.bodyA.categoryBitMask == PhysicsCategory.obstacles) && (contact.bodyB.categoryBitMask == PhysicsCategory.kite)*/ {
+        if (contact.collisionImpulse >= 0.4) && (contact.bodyA.categoryBitMask == PhysicsCategory.kite) && (contact.bodyB.categoryBitMask == PhysicsCategory.obstacles) {
             print("Hit!")
             second-=1
             //Move kite after being hit
 //            let moveObstacle = SKAction.move(to: CGPoint(x: 0, y: -175), duration: 1)
 //            let moveKit = SKAction.moveTo(x: (self.view?.frame.size.width)!/2, duration: 1)
-            kite.physicsBody?.collisionBitMask = (obstacles.physicsBody?.categoryBitMask)!
+//            kite.physicsBody?.collisionBitMask = (obstacles.physicsBody?.categoryBitMask)!
 //            obstacles.run(moveObstacle)
 //            kite.run(moveKit)
 //            obstacles.removeFromParent()
         }
     }
     
-    //Tap Recognizer
     func gameOver() {
         print("ended")
         
