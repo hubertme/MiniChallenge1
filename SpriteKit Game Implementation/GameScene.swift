@@ -34,14 +34,14 @@ struct PhysicsCategory {
 }
 
 class GameScene: SKScene {
-    
-    
    
     let arrayClouds = ["clouds1","clouds3","clouds4","clouds5","clouds9","clouds7"]
     
     let motionManager = CMMotionManager()
   
     let tail = SKSpriteNode(color: UIColor.white, size: CGSize(width: 1, height: 400))
+    
+    var obstacles = SKSpriteNode()
     
     override func didMove(to view: SKView) {
         
@@ -71,68 +71,51 @@ class GameScene: SKScene {
         kite.physicsBody?.categoryBitMask = PhysicsCategory.kite
         kite.physicsBody?.contactTestBitMask = PhysicsCategory.obstacles
         kite.physicsBody?.affectedByGravity = false
-        kite.physicsBody?.restitution = 1
+        kite.physicsBody?.restitution = 0
         
         scoreLabel = self.childNode(withName: "scoreLabel") as! SKLabelNode
-      
-      
-      
-//        createTail1()
         createTail()
       
     }
   
   func createTail() {
-    let tailHolder = SKSpriteNode(color: UIColor.green, size: CGSize(width: 1, height: 1))
-    tailHolder.position = CGPoint(x: 0, y: -500)
-    tailHolder.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: 1, height: 1))
-    tailHolder.physicsBody?.isDynamic = false
+        let tailHolder = SKSpriteNode(color: UIColor.green, size: CGSize(width: 1, height: 1))
+        tailHolder.position = CGPoint(x: 0, y: -500)
+        tailHolder.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: 1, height: 1))
+        tailHolder.physicsBody?.isDynamic = false
     
     
-    tail.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: 1, height: 400))
-    tail.position = CGPoint(x: kite.position.x, y: kite.position.y - 200)
-    tail.physicsBody?.isDynamic = true
-    tail.color = UIColor.white
-    tail.physicsBody?.collisionBitMask = PhysicsCategory.none
-    tail.zPosition = -1
+        tail.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: 1, height: 400))
+        tail.position = CGPoint(x: kite.position.x, y: kite.position.y - 200)
+        tail.physicsBody?.isDynamic = true
+        tail.color = UIColor.white
+        tail.physicsBody?.collisionBitMask = PhysicsCategory.none
+        tail.zPosition = -1
     
-    addChild(tail)
-    addChild(tailHolder)
+        addChild(tail)
+        addChild(tailHolder)
     
-    let tailKiteJoint = SKPhysicsJointPin.joint(withBodyA: tail.physicsBody!, bodyB: kite.physicsBody! , anchor: CGPoint(x: kite.position.x, y: kite.position.y))
+        let tailKiteJoint = SKPhysicsJointPin.joint(withBodyA: tail.physicsBody!, bodyB: kite.physicsBody! , anchor: CGPoint(x: kite.position.x, y: kite.position.y))
     
-    let tailHolderJoint = SKPhysicsJointPin.joint(withBodyA: tailHolder.physicsBody!, bodyB: tail.physicsBody!, anchor: CGPoint(x: tailHolder.position.x, y: tailHolder.position.y))
+        let tailHolderJoint = SKPhysicsJointPin.joint(withBodyA: tailHolder.physicsBody!, bodyB: tail.physicsBody!, anchor: CGPoint(x: tailHolder.position.x, y: tailHolder.position.y))
     
-    self.physicsWorld.add(tailKiteJoint)
-    self.physicsWorld.add(tailHolderJoint)
+        self.physicsWorld.add(tailKiteJoint)
+        self.physicsWorld.add(tailHolderJoint)
     
-  }
+        let rotationRange = SKRange(lowerLimit: -45.toRadian, upperLimit: 45.toRadian)
+        let lockRotation = SKConstraint.zRotation(rotationRange)
+        tail.constraints = [ lockRotation ]
+      }
   
   func changeBG() {
 //    let blue = #colorLiteral(red: 0.6161276698, green: 0.9302651286, blue: 1, alpha: 1)
-    let orange = #colorLiteral(red: 1, green: 0.7476941943, blue: 0.2104941905, alpha: 1)
+        let orange = #colorLiteral(red: 1, green: 0.7476941943, blue: 0.2104941905, alpha: 1)
     
-    let bgChange = SKAction.colorize(with: orange, colorBlendFactor: 1.0, duration: 15)
-    run(bgChange)
-  }
+        let bgChange = SKAction.colorize(with: orange, colorBlendFactor: 1.0, duration: 15)
+        run(bgChange)
+      }
   
   //  Version 01 > More realistic & natural but still not moving
-  func createTail1() {
-      let kiteX = kite.position.x
-      let kiteY = kite.position.y
-      var tailPoints = [CGPoint(x: kiteX, y: kiteY),
-                    CGPoint(x: kiteX - 50, y: kiteY - 150),
-                    CGPoint(x: kiteX + 40, y: kiteY - 200),
-                    CGPoint(x: kiteX - 10, y: kiteY - 330),
-                    CGPoint(x: kiteX - 55, y: kiteY - 400)]
-
-      let tail = SKShapeNode(splinePoints: &tailPoints, count: tailPoints.count)
-
-      tail.lineWidth = 2
-      tail.strokeColor = UIColor.white
-
-      addChild(tail)
-  }
   
     func generateClouds() {
         let posX = Int(arc4random_uniform(320))-180
@@ -150,7 +133,7 @@ class GameScene: SKScene {
     func generateObstacle(){
         let posX = Int(arc4random_uniform(320))-180
         let size = CGSize(width: 60, height: 60)
-        let obstacles = SKSpriteNode(imageNamed: "water")
+        obstacles = SKSpriteNode(imageNamed: "water")
         obstacles.scale(to: size)
         obstacles.position = CGPoint(x: posX, y: 420)
         obstacles.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: 60, height: 60))
@@ -159,7 +142,7 @@ class GameScene: SKScene {
         obstacles.physicsBody?.collisionBitMask = PhysicsCategory.none
         obstacles.physicsBody?.categoryBitMask = PhysicsCategory.obstacles
         obstacles.physicsBody?.contactTestBitMask = PhysicsCategory.kite
-        obstacles.physicsBody?.restitution = 0.5
+        obstacles.physicsBody?.restitution = 1
         obstacles.physicsBody?.allowsRotation = true
         
         addChild(obstacles)
@@ -191,13 +174,20 @@ class GameScene: SKScene {
     
     func updateScore(){
         second+=1
-        print("\(second) s")
-        scoreLabel.text = "\(second) s"
+        print("Energy: \(second)")
+        scoreLabel.text = "Energy: \(second)"
     }
     
     func checkWin(){
+        if (second<0){
+            second = 0
+        }
         if (second==20){
-//            removeAction(forKey: "action")
+            removeAllActions()
+            gameOver()
+        }
+        else if (second==0){
+            isOver=true
             removeAllActions()
             gameOver()
         }
@@ -208,29 +198,22 @@ extension GameScene: SKPhysicsContactDelegate{
     func didBegin(_ contact: SKPhysicsContact) {
         if (contact.collisionImpulse >= 0.8) && (contact.bodyA.categoryBitMask == PhysicsCategory.kite) && (contact.bodyB.categoryBitMask == PhysicsCategory.obstacles) {
             print("Hit!")
-            isOver=true
-            let flewAway = SKAction.move(to: CGPoint(x: 0, y: 600000), duration: 5000)
-            kite.run(flewAway)
-//            removeAction(forKey: "action")
-            removeAllActions()
-            tail.removeFromParent()
-            gameOver()
+            second-=0
+            
+            //Move kite after being hit
+            let moveKite = SKAction.move(to: CGPoint(x: 0, y: -175), duration: 1)
+//            kite.physicsBody?.collisionBitMask = PhysicsCategory.none
+            kite.run(moveKite)
+            tail.run(moveKite)
+            obstacles.removeFromParent()
         }
     }
     
     //Tap Recognizer
     func gameOver() {
         print("ended")
-//        let infoLabel = SKLabelNode(fontNamed: "Helvetica-Thin")
-//        infoLabel.position = CGPoint(x: 0, y: -35)
-//        infoLabel.fontSize = 25
-//        infoLabel.alpha = 1
-//        infoLabel.fontColor = UIColor.white
-//        infoLabel.text = "Tap to Restart 🚀"
-//        self.addChild(infoLabel)
         
         if !(isOver){
-//            gameOverLabel.text = "You Win! 😄"
             run(SKAction.playSoundFileNamed("winningSound.wav", waitForCompletion: false))
             let sun = SKSpriteNode(imageNamed: "sun")
             addChild(sun)
@@ -242,13 +225,13 @@ extension GameScene: SKPhysicsContactDelegate{
             isOver = true
         }
         else{
+            let flewAway = SKAction.move(to: CGPoint(x: 0, y: 600000), duration: 5000)
+            kite.run(flewAway)
+            removeAllActions()
+            tail.removeFromParent()
             let loseSoundEffect = SKAction.playSoundFileNamed("losingSound.wav", waitForCompletion: false)
             run(loseSoundEffect)
         }
-        
-//        let fadeIn = SKAction.fadeAlpha(to: 1, duration: 0.5)
-//        let fadeOut = SKAction.fadeAlpha(to: 0.3, duration: 0.5)
-//        run(SKAction.repeatForever(SKAction.sequence([fadeIn,SKAction.wait(forDuration: 0.2),fadeOut])))
         
     }
 }

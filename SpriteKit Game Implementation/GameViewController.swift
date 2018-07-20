@@ -82,6 +82,7 @@ class GameViewController: UIViewController  {
 //              print(kite.zRotation)
                 let mult = 10.0
                 if (kite.position.x + (25*1.41) + CGFloat(myData.acceleration.x * mult) <= (375/2)) && (kite.position.x - (25*1.41) + CGFloat(myData.acceleration.x * mult) >= (-375/2)){
+                    
                     kite.position.x += CGFloat((myData.acceleration.x) * mult)
                   
                   
