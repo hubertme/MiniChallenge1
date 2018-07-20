@@ -19,6 +19,8 @@
 		E4134C6920FEDD2F00DFAF88 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E4134C6720FEDD2F00DFAF88 /* Main.storyboard */; };
 		E4134C6B20FEDD3100DFAF88 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E4134C6A20FEDD3100DFAF88 /* Assets.xcassets */; };
 		E4134C6E20FEDD3100DFAF88 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E4134C6C20FEDD3100DFAF88 /* LaunchScreen.storyboard */; };
+		E43FCE8D2101859D00CBAB74 /* losingSound.wav in Resources */ = {isa = PBXBuildFile; fileRef = E43FCE8C2101859D00CBAB74 /* losingSound.wav */; };
+		E43FCE8F2101873A00CBAB74 /* winningSound.wav in Resources */ = {isa = PBXBuildFile; fileRef = E43FCE8E2101873A00CBAB74 /* winningSound.wav */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +40,8 @@
 		E4134C6A20FEDD3100DFAF88 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E4134C6D20FEDD3100DFAF88 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E4134C6F20FEDD3100DFAF88 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E43FCE8C2101859D00CBAB74 /* losingSound.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = losingSound.wav; sourceTree = "<group>"; };
+		E43FCE8E2101873A00CBAB74 /* winningSound.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = winningSound.wav; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -91,6 +95,8 @@
 			isa = PBXGroup;
 			children = (
 				92B438A021004CA600AE144E /* saycheese.wav */,
+				E43FCE8E2101873A00CBAB74 /* winningSound.wav */,
+				E43FCE8C2101859D00CBAB74 /* losingSound.wav */,
 				92E5DC5421002450007E058F /* emojiJoy.json */,
 				E4134C5D20FEDD2F00DFAF88 /* AppDelegate.swift */,
 				E4134C5F20FEDD2F00DFAF88 /* GameScene.sks */,
@@ -166,6 +172,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E43FCE8D2101859D00CBAB74 /* losingSound.wav in Resources */,
+				E43FCE8F2101873A00CBAB74 /* winningSound.wav in Resources */,
 				E4134C6920FEDD2F00DFAF88 /* Main.storyboard in Resources */,
 				E4134C6020FEDD2F00DFAF88 /* GameScene.sks in Resources */,
 				E4134C6B20FEDD3100DFAF88 /* Assets.xcassets in Resources */,

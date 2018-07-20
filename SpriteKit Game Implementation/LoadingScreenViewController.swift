@@ -52,6 +52,7 @@ class LoadingScreenViewController: UIViewController {
         emojiAnimation!.loopAnimation = true
         view.addSubview(emojiAnimation!)
         emojiAnimation!.play()
+        
         let path = Bundle.main.path(forResource: "saycheese.wav", ofType:nil)!
         let url = URL(fileURLWithPath: path)
         
