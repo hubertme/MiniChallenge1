@@ -18,7 +18,8 @@ extension Array {
 }
 
 //  Create kite node
-var kite = SKSpriteNode()
+let kiteTexture = SKTexture(imageNamed: "kite-1")
+var kite = SKSpriteNode(texture: kiteTexture)
 
 var second = 0
 var scoreLabel = SKLabelNode()
@@ -57,12 +58,15 @@ class GameScene: SKScene {
             self.run(actionCloudRepeat)
             self.run(action)
         }
-        
-        kite = self.childNode(withName: "kite") as! SKSpriteNode
+        kite.scale(to: CGSize(width: 500, height: 500))
+        addChild(kite)
+//        kite = self.childNode(wxithName: "kite") as! SKSpriteNode
+        kite.physicsBody = SKPhysicsBody(texture: kiteTexture, size: CGSize(width: kite.size.width, height: kite.size.height))
         
         kite.physicsBody?.collisionBitMask = PhysicsCategory.obstacles
         kite.physicsBody?.categoryBitMask = PhysicsCategory.kite
         kite.physicsBody?.contactTestBitMask = PhysicsCategory.obstacles
+        kite.physicsBody?.affectedByGravity = false
         kite.physicsBody?.restitution = 1
         
         scoreLabel = self.childNode(withName: "scoreLabel") as! SKLabelNode
