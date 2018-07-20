@@ -10,17 +10,19 @@ import SpriteKit
 import GameplayKit
 import CoreMotion
 
+//  Get random element from array
 extension Array {
     func randomElement() -> Element  {
-    
         return self[Int(arc4random_uniform(UInt32(self.count)))]
     }
 }
+
+//  Create kite node
 var kite = SKSpriteNode()
 
 var second = 0
 var scoreLabel = SKLabelNode()
-var isOver=true
+var isOver = true
 
 struct PhysicsCategory {
     static let none: UInt32 = 0
@@ -35,14 +37,18 @@ class GameScene: SKScene {
     let arrayClouds = ["clouds1","clouds3","clouds4","clouds5","clouds9","clouds7"]
     
     let motionManager = CMMotionManager()
+  
+    let tail = SKSpriteNode(color: UIColor.white, size: CGSize(width: 1, height: 400))
     
     override func didMove(to view: SKView) {
+//        self.physicsBody = SKPhysicsBody(edgeLoopFrom: self.frame)
+      
         physicsWorld.contactDelegate = self
         
         second = 0
-        isOver=false
-        
-        let action = SKAction.repeatForever(SKAction.sequence([SKAction.wait(forDuration: 0.8), SKAction.run(generateObstacle), SKAction.run(updateScore)]))
+        isOver = false
+      
+        let action = SKAction.repeatForever(SKAction.sequence([SKAction.wait(forDuration: 1), SKAction.run(generateObstacle), SKAction.run(updateScore), SKAction.run(checkWin)]))
         
         let actionCloudRepeat = SKAction.repeatForever(SKAction.sequence([SKAction.wait(forDuration: 7), SKAction.run(generateClouds)]))
         let actionCloud = SKAction.sequence([SKAction.wait(forDuration: 2),SKAction.run(generateClouds)])
@@ -58,11 +64,61 @@ class GameScene: SKScene {
         kite.physicsBody?.collisionBitMask = PhysicsCategory.obstacles
         kite.physicsBody?.categoryBitMask = PhysicsCategory.kite
         kite.physicsBody?.contactTestBitMask = PhysicsCategory.obstacles
-        kite.physicsBody?.restitution = 0.5
+        kite.physicsBody?.restitution = 1
         
         scoreLabel = self.childNode(withName: "scoreLabel") as! SKLabelNode
+      
+      
+      
+      
+        createTail()
+      
     }
+  
+  func createTail() {
+    let tailHolder = SKSpriteNode(color: UIColor.green, size: CGSize(width: 1, height: 1))
+    tailHolder.position = CGPoint(x: 0, y: -500)
+    tailHolder.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: 1, height: 1))
+    tailHolder.physicsBody?.isDynamic = false
     
+    
+    tail.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: 1, height: 400))
+    tail.position = CGPoint(x: kite.position.x, y: kite.position.y - 200)
+    tail.physicsBody?.isDynamic = true
+    tail.color = UIColor.white
+    tail.physicsBody?.collisionBitMask = PhysicsCategory.none
+    tail.zPosition = -1
+    
+    addChild(tail)
+    addChild(tailHolder)
+    
+    let tailKiteJoint = SKPhysicsJointPin.joint(withBodyA: tail.physicsBody!, bodyB: kite.physicsBody! , anchor: CGPoint(x: kite.position.x, y: kite.position.y))
+    
+    let tailHolderJoint = SKPhysicsJointPin.joint(withBodyA: tailHolder.physicsBody!, bodyB: tail.physicsBody!, anchor: CGPoint(x: tailHolder.position.x, y: tailHolder.position.y))
+    
+    self.physicsWorld.add(tailKiteJoint)
+    self.physicsWorld.add(tailHolderJoint)
+    
+  }
+  
+  //  Version 01 > More realistic & natural but still not moving
+//  func createTail1() {
+//      let kiteX = kite.position.x
+//      let kiteY = kite.position.y
+//      var tailPoints = [CGPoint(x: kiteX, y: kiteY),
+//                    CGPoint(x: kiteX - 50, y: kiteY - 150),
+//                    CGPoint(x: kiteX + 40, y: kiteY - 200),
+//                    CGPoint(x: kiteX - 10, y: kiteY - 330),
+//                    CGPoint(x: kiteX - 55, y: kiteY - 400)]
+//
+//      let tail = SKShapeNode(splinePoints: &tailPoints, count: tailPoints.count)
+//
+//      tail.lineWidth = 2
+//      tail.strokeColor = UIColor.white
+//
+//      addChild(tail)
+//  }
+  
     func generateClouds() {
         let posX = Int(arc4random_uniform(320))-180
         let size = CGSize(width: 300, height: 300)
@@ -129,7 +185,8 @@ class GameScene: SKScene {
     
     func checkWin(){
         if (second==20){
-            removeAction(forKey: "action")
+//            removeAction(forKey: "action")
+            removeAllActions()
             gameOver()
         }
     }
@@ -140,7 +197,11 @@ extension GameScene: SKPhysicsContactDelegate{
         if (contact.collisionImpulse >= 0.8) && (contact.bodyA.categoryBitMask == PhysicsCategory.kite) && (contact.bodyB.categoryBitMask == PhysicsCategory.obstacles) {
             print("Hit!")
             isOver=true
-            removeAction(forKey: "action")
+            let flewAway = SKAction.move(to: CGPoint(x: 0, y: 600000), duration: 5000)
+            kite.run(flewAway)
+//            removeAction(forKey: "action")
+            removeAllActions()
+            tail.removeFromParent()
             gameOver()
         }
     }

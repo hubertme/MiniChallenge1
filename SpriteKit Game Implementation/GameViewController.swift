@@ -31,6 +31,9 @@ class GameViewController: UIViewController  {
         
         tapGesture.addTarget(self, action: #selector(startGame))
         self.view.addGestureRecognizer(tapGesture)
+      
+      
+      
     }
     
 //    override var shouldAutorotate: Bool {
@@ -61,10 +64,25 @@ class GameViewController: UIViewController  {
         motionManager.accelerometerUpdateInterval = 0.01
         motionManager.startAccelerometerUpdates(to: OperationQueue.current!) { (data, error) in
             if let myData = data {
+//              print(kite.zRotation)
                 let mult = 10.0
                 if (kite.position.x + (25*1.41) + CGFloat(myData.acceleration.x * mult) <= (375/2)) && (kite.position.x - (25*1.41) + CGFloat(myData.acceleration.x * mult) >= (-375/2)){
                     kite.position.x += CGFloat((myData.acceleration.x) * mult)
-                    //                    print("ok")
+                  
+                  
+                  
+                    //  Limiting the rotation value of the kite
+                    let rotationRange = SKRange(lowerLimit: 20.toRadian, upperLimit: 70.toRadian)
+                    let lockRotation = SKConstraint.zRotation(rotationRange)
+                    kite.constraints = [ lockRotation ]
+                  
+                    //  Move tail when kite moves
+//                    tailPoints[0].x += CGFloat((myData.acceleration.x) * mult)
+//                    tail.position.x += CGFloat((myData.acceleration.x) * mult)
+                  
+                    //  Add rotation when the kite moves
+                    kite.zRotation += (4 * -(myData.acceleration.x)).toRadian
+                  
                 }
                 else if (kite.position.x < 0){
                     kite.position.x = (-375/2)+(25*1.41)
@@ -79,6 +97,7 @@ class GameViewController: UIViewController  {
     @objc func startGame(){
         if (isOver){
             isOver=false
+            kite.position=CGPoint(x: 0, y: -175)
             UIView.animate(withDuration: 1) {
                 self.label.removeFromSuperview()
             }
@@ -93,5 +112,10 @@ class GameViewController: UIViewController  {
             }
         }
     }
+}
 
+extension Double {
+  var toRadian: CGFloat {
+    return (CGFloat(self) * CGFloat.pi) / 180
+  }
 }
