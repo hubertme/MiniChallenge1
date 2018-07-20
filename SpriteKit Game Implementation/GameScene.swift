@@ -41,6 +41,7 @@ class GameScene: SKScene {
     let tail = SKSpriteNode(color: UIColor.white, size: CGSize(width: 1, height: 400))
     
     override func didMove(to view: SKView) {
+        self.scene?.backgroundColor = #colorLiteral(red: 0.6161276698, green: 0.9302651286, blue: 1, alpha: 1)
 //        self.physicsBody = SKPhysicsBody(edgeLoopFrom: self.frame)
       
         physicsWorld.contactDelegate = self
@@ -48,7 +49,7 @@ class GameScene: SKScene {
         second = 0
         isOver = false
       
-        let action = SKAction.repeatForever(SKAction.sequence([SKAction.wait(forDuration: 1), SKAction.run(generateObstacle), SKAction.run(updateScore), SKAction.run(checkWin)]))
+        let action = SKAction.repeatForever(SKAction.sequence([SKAction.wait(forDuration: 1), SKAction.run(generateObstacle), SKAction.run(updateScore), SKAction.run(checkWin), SKAction.run(changeBG)]))
         
         let actionCloudRepeat = SKAction.repeatForever(SKAction.sequence([SKAction.wait(forDuration: 7), SKAction.run(generateClouds)]))
         let actionCloud = SKAction.sequence([SKAction.wait(forDuration: 2),SKAction.run(generateClouds)])
@@ -69,7 +70,7 @@ class GameScene: SKScene {
       
       
       
-      
+//        createTail1()
         createTail()
       
     }
@@ -100,23 +101,31 @@ class GameScene: SKScene {
     
   }
   
+  func changeBG() {
+//    let blue = #colorLiteral(red: 0.6161276698, green: 0.9302651286, blue: 1, alpha: 1)
+    let orange = #colorLiteral(red: 1, green: 0.7476941943, blue: 0.2104941905, alpha: 1)
+    
+    let bgChange = SKAction.colorize(with: orange, colorBlendFactor: 1.0, duration: 15)
+    run(bgChange)
+  }
+  
   //  Version 01 > More realistic & natural but still not moving
-//  func createTail1() {
-//      let kiteX = kite.position.x
-//      let kiteY = kite.position.y
-//      var tailPoints = [CGPoint(x: kiteX, y: kiteY),
-//                    CGPoint(x: kiteX - 50, y: kiteY - 150),
-//                    CGPoint(x: kiteX + 40, y: kiteY - 200),
-//                    CGPoint(x: kiteX - 10, y: kiteY - 330),
-//                    CGPoint(x: kiteX - 55, y: kiteY - 400)]
-//
-//      let tail = SKShapeNode(splinePoints: &tailPoints, count: tailPoints.count)
-//
-//      tail.lineWidth = 2
-//      tail.strokeColor = UIColor.white
-//
-//      addChild(tail)
-//  }
+  func createTail1() {
+      let kiteX = kite.position.x
+      let kiteY = kite.position.y
+      var tailPoints = [CGPoint(x: kiteX, y: kiteY),
+                    CGPoint(x: kiteX - 50, y: kiteY - 150),
+                    CGPoint(x: kiteX + 40, y: kiteY - 200),
+                    CGPoint(x: kiteX - 10, y: kiteY - 330),
+                    CGPoint(x: kiteX - 55, y: kiteY - 400)]
+
+      let tail = SKShapeNode(splinePoints: &tailPoints, count: tailPoints.count)
+
+      tail.lineWidth = 2
+      tail.strokeColor = UIColor.white
+
+      addChild(tail)
+  }
   
     func generateClouds() {
         let posX = Int(arc4random_uniform(320))-180
