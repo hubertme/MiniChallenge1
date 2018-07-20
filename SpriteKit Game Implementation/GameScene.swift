@@ -52,9 +52,8 @@ class GameScene: SKScene {
         
         let actionCloudRepeat = SKAction.repeatForever(SKAction.sequence([SKAction.wait(forDuration: 7), SKAction.run(generateClouds)]))
         let actionCloud = SKAction.sequence([SKAction.wait(forDuration: 2),SKAction.run(generateClouds)])
-//        run(actionCloud)
-//        run(action, withKey: "action")
-        run(actionCloud) {
+        
+        run(actionCloud){
             self.run(actionCloudRepeat)
             self.run(action)
         }
@@ -146,9 +145,6 @@ class GameScene: SKScene {
         obstacles.physicsBody?.contactTestBitMask = PhysicsCategory.kite
         obstacles.physicsBody?.restitution = 0.5
         obstacles.physicsBody?.allowsRotation = true
-        
-     
-
         
         addChild(obstacles)
         
