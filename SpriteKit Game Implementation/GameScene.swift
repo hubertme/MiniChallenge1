@@ -65,8 +65,10 @@ class GameScene: SKScene {
         kite.scale(to: CGSize(width: 500, height: 500))
         addChild(kite)
 //        kite = self.childNode(wxithName: "kite") as! SKSpriteNode
-        kite.physicsBody = SKPhysicsBody(texture: kiteTexture, size: CGSize(width: kite.size.width, height: kite.size.height))
-        
+//        kite.physicsBody = SKPhysicsBody(circleOfRadius:0.5)
+        kite.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: 60, height: 120))
+//        kite.physicsBody = SKPhysicsBody(texture: kiteTexture, size: CGSize(width: kite.size.width, height: kite.size.height))
+        kite.physicsBody?.isDynamic = false
         kite.physicsBody?.collisionBitMask = PhysicsCategory.obstacles
         kite.physicsBody?.categoryBitMask = PhysicsCategory.kite
         kite.physicsBody?.contactTestBitMask = PhysicsCategory.obstacles
@@ -82,14 +84,13 @@ class GameScene: SKScene {
         let tailHolder = SKSpriteNode(color: UIColor.green, size: CGSize(width: 1, height: 1))
         tailHolder.position = CGPoint(x: 0, y: -500)
         tailHolder.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: 1, height: 1))
-        tailHolder.physicsBody?.isDynamic = false
-    
-    
+        tailHolder.physicsBody?.isDynamic = true
+
         tail.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: 1, height: 400))
         tail.position = CGPoint(x: kite.position.x, y: kite.position.y - 200)
         tail.physicsBody?.isDynamic = true
         tail.color = UIColor.white
-        tail.physicsBody?.collisionBitMask = PhysicsCategory.none
+        tail.physicsBody?.collisionBitMask = 0
         tail.zPosition = -1
     
         addChild(tail)
@@ -136,10 +137,11 @@ class GameScene: SKScene {
         obstacles = SKSpriteNode(imageNamed: "water")
         obstacles.scale(to: size)
         obstacles.position = CGPoint(x: posX, y: 420)
+//        obstacles.physicsBody = SKPhysicsBody(circleOfRadius: 5.0)
         obstacles.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: 60, height: 60))
         
         obstacles.physicsBody?.isDynamic = true
-        obstacles.physicsBody?.collisionBitMask = PhysicsCategory.none
+        obstacles.physicsBody?.collisionBitMask = PhysicsCategory.kite
         obstacles.physicsBody?.categoryBitMask = PhysicsCategory.obstacles
         obstacles.physicsBody?.contactTestBitMask = PhysicsCategory.kite
         obstacles.physicsBody?.restitution = 1
@@ -196,16 +198,16 @@ class GameScene: SKScene {
 
 extension GameScene: SKPhysicsContactDelegate{
     func didBegin(_ contact: SKPhysicsContact) {
-        if (contact.collisionImpulse >= 0.8) && (contact.bodyA.categoryBitMask == PhysicsCategory.kite) && (contact.bodyB.categoryBitMask == PhysicsCategory.obstacles) {
+        if (contact.collisionImpulse >= 0.4) /*&& (contact.bodyA.categoryBitMask == PhysicsCategory.obstacles) && (contact.bodyB.categoryBitMask == PhysicsCategory.kite)*/ {
             print("Hit!")
-            second-=0
-            
+            second-=1
             //Move kite after being hit
-            let moveKite = SKAction.move(to: CGPoint(x: 0, y: -175), duration: 1)
-//            kite.physicsBody?.collisionBitMask = PhysicsCategory.none
-            kite.run(moveKite)
-            tail.run(moveKite)
-            obstacles.removeFromParent()
+//            let moveObstacle = SKAction.move(to: CGPoint(x: 0, y: -175), duration: 1)
+//            let moveKit = SKAction.moveTo(x: (self.view?.frame.size.width)!/2, duration: 1)
+            kite.physicsBody?.collisionBitMask = (obstacles.physicsBody?.categoryBitMask)!
+//            obstacles.run(moveObstacle)
+//            kite.run(moveKit)
+//            obstacles.removeFromParent()
         }
     }
     
