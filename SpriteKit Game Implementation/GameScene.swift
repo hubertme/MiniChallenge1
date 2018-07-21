@@ -23,7 +23,6 @@ let kiteTexture = SKTexture(imageNamed: "kite-1")
 var kite = SKSpriteNode(texture: kiteTexture)
 
 var second = 0
-var scoreLabel = SKLabelNode()
 var isOver = true
 
 struct PhysicsCategory {
@@ -43,17 +42,21 @@ class GameScene: SKScene {
     
     var obstacles = SKSpriteNode()
     
+    var progressBar = SKSpriteNode()
+    
     override func didMove(to view: SKView) {
         
         self.scene?.backgroundColor = #colorLiteral(red: 0.6161276698, green: 0.9302651286, blue: 1, alpha: 1)
-//        self.physicsBody = SKPhysicsBody(edgeLoopFrom: self.frame)
       
         physicsWorld.contactDelegate = self
         
         second = 0
         isOver = false
+//        progressBar = SKSpriteNode(color: #colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1), size: CGSize(width: 0, height: 20))
+        
+        addChild(progressBar)
       
-        let action = SKAction.repeatForever(SKAction.sequence([SKAction.wait(forDuration: 1), SKAction.run(generateObstacle), SKAction.run(updateScore), SKAction.run(checkWin), SKAction.run(changeBG)]))
+        let action = SKAction.repeatForever(SKAction.sequence([SKAction.wait(forDuration: 1), SKAction.run(generateObstacle), SKAction.run(updateScore), SKAction.run(checkWin),  SKAction.run(changeBG)]))
         
         let actionCloudRepeat = SKAction.repeatForever(SKAction.sequence([SKAction.wait(forDuration: 7), SKAction.run(generateClouds)]))
         let actionCloud = SKAction.sequence([SKAction.wait(forDuration: 2),SKAction.run(generateClouds)])
@@ -75,7 +78,7 @@ class GameScene: SKScene {
         kite.physicsBody?.affectedByGravity = false
         kite.physicsBody?.restitution = 0
         
-        scoreLabel = self.childNode(withName: "scoreLabel") as! SKLabelNode
+//        scoreLabel = self.childNode(withName: "scoreLabel") as! SKLabelNode
         createTail()
       
     }
@@ -177,19 +180,27 @@ class GameScene: SKScene {
     
     func updateScore(){
         second+=1
+        progressBar.removeFromParent()
         if (second<0){
             second = 0
         }
-        scoreLabel.text = "Energy: \(second)"
+        print(second)
+//        scoreLabel.text = "Energy: \(second)"
+        progressBar = SKSpriteNode(color: #colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1), size: CGSize(width: Double(second)/10.0 * 375, height: 30))
+        progressBar.position = CGPoint(x: -187.5, y: 350)
+        addChild(progressBar)
     }
     
     func checkWin(){
         if (second==20){
+//            progressBar = SKSpriteNode(color: #colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1), size: CGSize(width: 350, height: 20))
+//            progressBar.position = CGPoint(x: -187.5, y: 350)
             removeAllActions()
             gameOver()
         }
         else if (second==0){
             isOver=true
+            progressBar.removeFromParent()
             removeAllActions()
             gameOver()
         }
