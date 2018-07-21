@@ -34,6 +34,8 @@ class GameViewController: UIViewController  {
             
         }
         
+        //Commence and restart game
+        startGame()
         tapGesture.addTarget(self, action: #selector(startGame))
         self.view.addGestureRecognizer(tapGesture)
     }
@@ -52,11 +54,11 @@ class GameViewController: UIViewController  {
     
     override func viewDidAppear(_ animated: Bool) {
        
-        motionManager.accelerometerUpdateInterval = 0.01
+        motionManager.accelerometerUpdateInterval = 0.02
         motionManager.startAccelerometerUpdates(to: OperationQueue.current!) { (data, error) in
             if let myData = data {
 //              print(kite.zRotation)
-                let mult = 10.0
+                let mult = 20.0
                 if (kite.position.x + (25*1.41) + CGFloat(myData.acceleration.x * mult) <= (375/2)) && (kite.position.x - (25*1.41) + CGFloat(myData.acceleration.x * mult) >= (-375/2)){
                     
                     kite.position.x += CGFloat((myData.acceleration.x) * mult)
@@ -67,10 +69,6 @@ class GameViewController: UIViewController  {
                     let rotationRange = SKRange(lowerLimit: -15.toRadian, upperLimit: 15.toRadian)
                     let lockRotation = SKConstraint.zRotation(rotationRange)
                     kite.constraints = [ lockRotation ]
-                  
-                    //  Move tail when kite moves
-//                    tailPoints[0].x += CGFloat((myData.acceleration.x) * mult)
-//                    tail.position.x += CGFloat((myData.acceleration.x) * mult)
                   
                     //  Add rotation when the kite moves
                     kite.zRotation += (2 * -(myData.acceleration.x)).toRadian
@@ -89,7 +87,7 @@ class GameViewController: UIViewController  {
     @objc func startGame(){
         if (isOver){
             isOver=false
-            kite.position=CGPoint(x: 0, y: -175)
+            kite.position=CGPoint(x: 0, y: -600)
             if let view = self.view as! SKView? {
                 // Load the SKScene from 'GameScene.sks'
                 if let scene = SKScene(fileNamed: "GameScene") {

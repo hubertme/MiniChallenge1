@@ -55,7 +55,8 @@ class GameScene: SKScene {
 //        progressBar = SKSpriteNode(color: #colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1), size: CGSize(width: 0, height: 20))
         
         addChild(progressBar)
-      
+        let moveKite = SKAction.moveTo(y: -175, duration: 3)
+        
         let action = SKAction.repeatForever(SKAction.sequence([SKAction.wait(forDuration: 1), SKAction.run(generateObstacle), SKAction.run(updateScore), SKAction.run(checkWin),  SKAction.run(changeBG)]))
         
         let actionCloudRepeat = SKAction.repeatForever(SKAction.sequence([SKAction.wait(forDuration: 7), SKAction.run(generateClouds)]))
@@ -65,12 +66,11 @@ class GameScene: SKScene {
             self.run(actionCloudRepeat)
             self.run(action)
         }
+        
         kite.scale(to: CGSize(width: 500, height: 500))
+        kite.run(moveKite)
         addChild(kite)
-//        kite = self.childNode(wxithName: "kite") as! SKSpriteNode
-//        kite.physicsBody = SKPhysicsBody(circleOfRadius:0.5)
         kite.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: 60, height: 120))
-//        kite.physicsBody = SKPhysicsBody(texture: kiteTexture, size: CGSize(width: kite.size.width, height: kite.size.height))
         kite.physicsBody?.isDynamic = false
         kite.physicsBody?.collisionBitMask = PhysicsCategory.obstacles
         kite.physicsBody?.categoryBitMask = PhysicsCategory.kite
@@ -78,7 +78,6 @@ class GameScene: SKScene {
         kite.physicsBody?.affectedByGravity = false
         kite.physicsBody?.restitution = 0
         
-//        scoreLabel = self.childNode(withName: "scoreLabel") as! SKLabelNode
         createTail()
       
     }
@@ -211,7 +210,8 @@ extension GameScene: SKPhysicsContactDelegate{
     func didBegin(_ contact: SKPhysicsContact) {
         if (contact.collisionImpulse >= 0.4) && (contact.bodyA.categoryBitMask == PhysicsCategory.kite) && (contact.bodyB.categoryBitMask == PhysicsCategory.obstacles) {
             print("Hit!")
-            second-=1
+            second-=2
+            
             //Move kite after being hit
 //            let moveObstacle = SKAction.move(to: CGPoint(x: 0, y: -175), duration: 1)
 //            let moveKit = SKAction.moveTo(x: (self.view?.frame.size.width)!/2, duration: 1)
@@ -235,6 +235,7 @@ extension GameScene: SKPhysicsContactDelegate{
             sun.run(SKAction.move(to: CGPoint(x: 0, y: 10), duration: 8))
             kite.physicsBody?.collisionBitMask = PhysicsCategory.none
             isOver = true
+            
         }
         else{
             let flewAway = SKAction.move(to: CGPoint(x: 0, y: 600000), duration: 5000)
