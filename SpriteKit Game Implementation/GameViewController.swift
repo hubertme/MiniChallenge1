@@ -22,7 +22,7 @@ class GameViewController: UIViewController  {
     let tapGesture = UITapGestureRecognizer()
     
     override func viewDidLoad() {
-//        super.viewDidLoad()
+        super.viewDidLoad()
         let path = Bundle.main.path(forResource: "Tahoe.mp3", ofType:nil)!
         let url = URL(fileURLWithPath: path)
         
