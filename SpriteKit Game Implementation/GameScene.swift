@@ -205,7 +205,9 @@ extension GameScene: SKPhysicsContactDelegate{
             print("Hit!")
             second-=2
             run(SKAction.playSoundFileNamed("waterDrop.wav", waitForCompletion: false))
-            AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
+            let notification = UINotificationFeedbackGenerator()
+            notification.notificationOccurred(.warning)
+//            AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
         }
     }
     
@@ -231,6 +233,7 @@ extension GameScene: SKPhysicsContactDelegate{
             tail.removeFromParent()
             let loseSoundEffect = SKAction.playSoundFileNamed("losingSound.wav", waitForCompletion: false)
             run(loseSoundEffect)
+            AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
         }
         
     }
