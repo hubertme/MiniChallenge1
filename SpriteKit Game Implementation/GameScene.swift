@@ -52,10 +52,9 @@ class GameScene: SKScene {
         
         second = 0
         isOver = false
-//        progressBar = SKSpriteNode(color: #colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1), size: CGSize(width: 0, height: 20))
         
         addChild(progressBar)
-        let moveKite = SKAction.moveTo(y: -175, duration: 3)
+        let moveKite = SKAction.moveTo(y: -175, duration: 4)
         
         let action = SKAction.repeatForever(SKAction.sequence([SKAction.wait(forDuration: 1), SKAction.run(generateObstacle), SKAction.run(updateScore), SKAction.run(checkWin),  SKAction.run(changeBG)]))
         
@@ -111,15 +110,14 @@ class GameScene: SKScene {
         tail.constraints = [ lockRotation ]
       }
   
-  func changeBG() {
+    func changeBG() {
         let orange = #colorLiteral(red: 1, green: 0.7476941943, blue: 0.2104941905, alpha: 1)
-    
-        let bgChange = SKAction.colorize(with: orange, colorBlendFactor: 1.0, duration: 15)
+
+        let bgChange = SKAction.colorize(with: orange, colorBlendFactor: 1.0, duration: 30)
         run(bgChange)
       }
   
   //  Version 01 > More realistic & natural but still not moving
-  
     func generateClouds() {
         let posX = Int(arc4random_uniform(320))-180
         let size = CGSize(width: 300, height: 300)
@@ -139,7 +137,6 @@ class GameScene: SKScene {
         obstacles = SKSpriteNode(imageNamed: "water")
         obstacles.scale(to: size)
         obstacles.position = CGPoint(x: posX, y: 420)
-//        obstacles.physicsBody = SKPhysicsBody(circleOfRadius: 5.0)
         obstacles.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: 60, height: 60))
         
         obstacles.physicsBody?.isDynamic = true
@@ -183,7 +180,6 @@ class GameScene: SKScene {
             second = 0
         }
         print(second)
-//        scoreLabel.text = "Energy: \(second)"
         progressBar = SKSpriteNode(color: #colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1), size: CGSize(width: Double(second)/10.0 * 375, height: 30))
         progressBar.position = CGPoint(x: -187.5, y: 350)
         addChild(progressBar)
@@ -191,8 +187,6 @@ class GameScene: SKScene {
     
     func checkWin(){
         if (second==20){
-//            progressBar = SKSpriteNode(color: #colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1), size: CGSize(width: 350, height: 20))
-//            progressBar.position = CGPoint(x: -187.5, y: 350)
             removeAllActions()
             gameOver()
         }
@@ -211,14 +205,7 @@ extension GameScene: SKPhysicsContactDelegate{
             print("Hit!")
             second-=2
             run(SKAction.playSoundFileNamed("waterDrop.wav", waitForCompletion: false))
-            
-            //Move kite after being hit
-//            let moveObstacle = SKAction.move(to: CGPoint(x: 0, y: -175), duration: 1)
-//            let moveKit = SKAction.moveTo(x: (self.view?.frame.size.width)!/2, duration: 1)
-//            kite.physicsBody?.collisionBitMask = (obstacles.physicsBody?.categoryBitMask)!
-//            obstacles.run(moveObstacle)
-//            kite.run(moveKit)
-//            obstacles.removeFromParent()
+            AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
         }
     }
     
