@@ -112,7 +112,6 @@ class GameScene: SKScene {
       }
   
   func changeBG() {
-//    let blue = #colorLiteral(red: 0.6161276698, green: 0.9302651286, blue: 1, alpha: 1)
         let orange = #colorLiteral(red: 1, green: 0.7476941943, blue: 0.2104941905, alpha: 1)
     
         let bgChange = SKAction.colorize(with: orange, colorBlendFactor: 1.0, duration: 15)
@@ -211,6 +210,7 @@ extension GameScene: SKPhysicsContactDelegate{
         if (contact.collisionImpulse >= 0.4) && (contact.bodyA.categoryBitMask == PhysicsCategory.kite) && (contact.bodyB.categoryBitMask == PhysicsCategory.obstacles) {
             print("Hit!")
             second-=2
+            run(SKAction.playSoundFileNamed("waterDrop.wav", waitForCompletion: false))
             
             //Move kite after being hit
 //            let moveObstacle = SKAction.move(to: CGPoint(x: 0, y: -175), duration: 1)
