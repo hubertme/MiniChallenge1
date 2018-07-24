@@ -21,6 +21,7 @@
 		E4134C6B20FEDD3100DFAF88 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E4134C6A20FEDD3100DFAF88 /* Assets.xcassets */; };
 		E4134C6E20FEDD3100DFAF88 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E4134C6C20FEDD3100DFAF88 /* LaunchScreen.storyboard */; };
 		E425C18E210567F90054CDCD /* waterDrop.wav in Resources */ = {isa = PBXBuildFile; fileRef = E425C18D210567F90054CDCD /* waterDrop.wav */; };
+		E425C190210593D00054CDCD /* Splash.sks in Resources */ = {isa = PBXBuildFile; fileRef = E425C18F210593CF0054CDCD /* Splash.sks */; };
 		E43FCE8D2101859D00CBAB74 /* losingSound.wav in Resources */ = {isa = PBXBuildFile; fileRef = E43FCE8C2101859D00CBAB74 /* losingSound.wav */; };
 		E43FCE8F2101873A00CBAB74 /* winningSound.wav in Resources */ = {isa = PBXBuildFile; fileRef = E43FCE8E2101873A00CBAB74 /* winningSound.wav */; };
 /* End PBXBuildFile section */
@@ -44,6 +45,7 @@
 		E4134C6D20FEDD3100DFAF88 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E4134C6F20FEDD3100DFAF88 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E425C18D210567F90054CDCD /* waterDrop.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = waterDrop.wav; sourceTree = "<group>"; };
+		E425C18F210593CF0054CDCD /* Splash.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Splash.sks; sourceTree = "<group>"; };
 		E43FCE8C2101859D00CBAB74 /* losingSound.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = losingSound.wav; sourceTree = "<group>"; };
 		E43FCE8E2101873A00CBAB74 /* winningSound.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = winningSound.wav; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -109,6 +111,7 @@
 				E4134C6120FEDD2F00DFAF88 /* Actions.sks */,
 				E4134C6320FEDD2F00DFAF88 /* GameScene.swift */,
 				E4134C6520FEDD2F00DFAF88 /* GameViewController.swift */,
+				E425C18F210593CF0054CDCD /* Splash.sks */,
 				E4134C6720FEDD2F00DFAF88 /* Main.storyboard */,
 				E4134C6A20FEDD3100DFAF88 /* Assets.xcassets */,
 				E4134C6C20FEDD3100DFAF88 /* LaunchScreen.storyboard */,
@@ -182,6 +185,7 @@
 				E43FCE8F2101873A00CBAB74 /* winningSound.wav in Resources */,
 				E4134C6920FEDD2F00DFAF88 /* Main.storyboard in Resources */,
 				E4134C6020FEDD2F00DFAF88 /* GameScene.sks in Resources */,
+				E425C190210593D00054CDCD /* Splash.sks in Resources */,
 				E4134C6B20FEDD3100DFAF88 /* Assets.xcassets in Resources */,
 				92E5DC5521002451007E058F /* emojiJoy.json in Resources */,
 				E425C18E210567F90054CDCD /* waterDrop.wav in Resources */,
@@ -393,7 +397,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = hubertwangg.minichallenge1;
+				PRODUCT_BUNDLE_IDENTIFIER = hubertwangg.minichallenge1.version2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -412,7 +416,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = hubertwangg.minichallenge1;
+				PRODUCT_BUNDLE_IDENTIFIER = hubertwangg.minichallenge1.version2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
